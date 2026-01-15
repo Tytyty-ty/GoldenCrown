@@ -1,5 +1,6 @@
 ﻿using GoldenCrown.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GoldenCrown.Data
 {
@@ -7,20 +8,6 @@ namespace GoldenCrown.Data
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var builed = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            var connectionString = builed.GetConnectionString("DefaultConnection");
-
-            optionsBuilder.UseSqlServer(connectionString);
-
-            Database.EnsureCreated();
-        }
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
@@ -44,6 +31,8 @@ namespace GoldenCrown.Data
                 .HasColumnName("password")
                 .IsRequired();
 
+            SeedSomeUsers(userEntity);
+
             var accountEntity = modelBuilder.Entity<Account>().ToTable("accounts");
             accountEntity.HasKey(a => a.AccountId);
             accountEntity.Property(a => a.AccountId)
@@ -51,6 +40,7 @@ namespace GoldenCrown.Data
                 .UseIdentityColumn();
             accountEntity.Property(a => a.Balance)
                 .HasColumnName("id")
+                .HasPrecision(18, 2)
                 .IsRequired();
             accountEntity.Property(a => a.UserId)
                 .HasColumnName("user_id")
@@ -93,6 +83,30 @@ namespace GoldenCrown.Data
                 .HasPrecision(18, 2)
                 .IsRequired();
 
+        }
+
+        private void SeedSomeUsers(EntityTypeBuilder<User> userEntity)
+        {
+            userEntity.HasData(new User
+                (Id: 1, 
+                Login: "Alex123", 
+                "Alex", 
+                "123123")
+                );
+
+            userEntity.HasData(new User
+                (Id: 2,
+                Login: "Blober123",
+                "Bulk",
+                "123123")
+                );
+
+            userEntity.HasData(new User
+                (Id: 3,
+                Login: "Civic123123",
+                "Civilla",
+                "123123")
+                );
         }
     }
 }
