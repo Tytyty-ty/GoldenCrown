@@ -3,9 +3,9 @@
 namespace GoldenCrown.Models
 {
     public record Account
-        (
-        long AccountId,
-        long UserId,
-        Decimal Balance
-        );
+    {
+        public long AccountId { get; set; }
+        public long UserId { get; set; }
+        public Decimal Balance { get; set; }
+    };
 }

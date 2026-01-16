@@ -3,11 +3,11 @@
 namespace GoldenCrown.Models
 {
     public record Transaction
-        (
-        long Id,
-        long SenderAccountId,
-        long ReceiverAccountId,
-        DateTime CreatedAt,
-        [Range(0.01, Double.MaxValue)] Decimal Amount
-        );
+    {
+        public long Id { get; set; }
+        public long SenderAccountId { get; set; }
+        public long ReceiverAccountId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public Decimal Amount { get; set; }
+    };
 }

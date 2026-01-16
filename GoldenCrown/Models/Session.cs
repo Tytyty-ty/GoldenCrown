@@ -3,9 +3,9 @@
 namespace GoldenCrown.Models
 {
     public record Session
-        (
-        long UserId,
-        string Token,
-        DateTime ExpiresAt
-        );
+    {
+        public long UserId { get; set; }
+        public string Token { get; set; }
+        public DateTime ExpiresAt { get; set; }
+    };
 }

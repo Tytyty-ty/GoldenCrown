@@ -88,25 +88,28 @@ namespace GoldenCrown.Data
         private void SeedSomeUsers(EntityTypeBuilder<User> userEntity)
         {
             userEntity.HasData(new User
-                (Id: 1, 
-                Login: "Alex123", 
-                "Alex", 
-                "123123")
-                );
+            {
+                Id = 1,
+                Login = "Alex123",
+                Name = "Alex",
+                Password = "123123"
+            });
 
             userEntity.HasData(new User
-                (Id: 2,
-                Login: "Blober123",
-                "Bulk",
-                "123123")
-                );
+            {
+                Id = 2,
+                Login = "Blober123",
+                Name = "Bulk",
+                Password = "123123"
+            });
 
             userEntity.HasData(new User
-                (Id: 3,
-                Login: "Civic123123",
-                "Civilla",
-                "123123")
-                );
+            {
+                Id = 3,
+                Login = "Civic123123",
+                Name = "Civilla",
+                Password = "123123"
+            });
         }
     }
 }

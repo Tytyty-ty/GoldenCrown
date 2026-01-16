@@ -2,11 +2,11 @@
 
 namespace GoldenCrown.Models
 {
-    public record User 
-        (
-        long Id,
-        [MinLength(3)] [MaxLength(32)] string Login, 
-        [MinLength(3)] [MaxLength(32)] string Name, 
-        [MinLength(6)] [MaxLength(32)] string Password
-        );
+    public record User
+    {
+        public long Id { get; set; }
+        public string Login { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+    };
 }
