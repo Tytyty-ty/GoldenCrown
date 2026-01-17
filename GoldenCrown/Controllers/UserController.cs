@@ -18,19 +18,45 @@ namespace GoldenCrown.Controllers
         }
 
 
-        [HttpPost("register")] 
-        public async Task<IActionResult> Post([FromBody] RegisterRequest request)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var result = await _userService.RegisterAsync(request);
 
-            if (result)
+            if (result.IsSuccess)
             {
                 return Ok(new { Message = "User registred successfully" });
             }
 
-            return BadRequest(new { Message = "User registration failed" });
+            return result.ErrorCode switch { 
+                ErrorCodes.Conflict => Conflict(new { Message = result.ErrorMessage }),
+                _ => BadRequest(new { Message = result.ErrorMessage })
+            };
         }
 
-        [HttpGet("")]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _userService.LoginAsync(request);
+
+            if (result)
+            {
+                return Ok(new {Token = result.Value});
+            }
+
+            return result.ErrorCode switch
+            {
+                ErrorCodes.NotFound => NotFound(new { Message = result.ErrorMessage }),
+                ErrorCodes.Unauthorized => Unauthorized(new { Message = result.ErrorMessage }),
+                _ => BadRequest(new { Message = result.ErrorMessage })
+            };
+        }
+
+
     }
 }

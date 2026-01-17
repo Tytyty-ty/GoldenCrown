@@ -13,7 +13,7 @@ namespace GoldenCrown.Services
             _context = context;
         }
 
-        public async Task<bool> CreateAccountAsync(string login)
+        public async Task<Result> CreateAccountAsync(string login)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
 
@@ -31,7 +31,7 @@ namespace GoldenCrown.Services
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
-            return true;
+            return Result.Success();
         }
     }
 }
