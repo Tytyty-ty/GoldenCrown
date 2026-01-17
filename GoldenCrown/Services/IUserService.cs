@@ -4,6 +4,7 @@ namespace GoldenCrown.Services
 {
     public interface IUserService
     {
-        Task<bool> RegisterAsync(RegisterRequest request);
+        Task<Result<LoginResponse>> LoginAsync(LoginRequest request);
+        Task<Result> RegisterAsync(RegisterRequest request);
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IAccountService
     {
-        Task<bool> CreateAccountAsync(string login);
+        Task<Result> CreateAccountAsync(string login);
     }
 }
